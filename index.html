@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cute Cat Videos</title>
+  <title>Rickroll</title>
   <style>
     body {
       margin: 0;
@@ -15,11 +15,12 @@
       width: 100%;
       height: 100%;
       border: none;
+      pointer-events: none; /* Disable interaction with the video */
     }
   </style>
 </head>
 <body>
-  <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
+  <iframe id="rickroll-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" allowfullscreen></iframe>
 
   <script>
     // Request fullscreen mode
@@ -34,8 +35,15 @@
       }
     }
 
-    // Call the requestFullscreen function when the page loads
-    window.addEventListener('load', requestFullscreen);
+    // Get the rickroll video element
+    var rickrollVideo = document.getElementById('rickroll-video');
+
+    // Request fullscreen mode and unmute the video
+    window.addEventListener('load', function() {
+      requestFullscreen();
+      rickrollVideo.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      rickrollVideo.contentWindow.postMessage('{"event":"command","func":"unMuteVideo","args":""}', '*');
+    });
   </script>
 </body>
 </html>
